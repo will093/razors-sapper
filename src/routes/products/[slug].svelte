@@ -14,51 +14,40 @@
 </script>
 
 <script>
-	export let product;
+  export let product;
+  import { addToCart } from '../../stores/cart';
+  import Loading from "../../components/Loading.svelte";
+  import globalStore from '../../stores/globalStore';
 </script>
 
-<style>
-	/*
-		By default, CSS is locally scoped to the component,
-		and any unused styles are dead-code-eliminated.
-		In this page, Svelte can't know which elements are
-		going to appear inside the {{{post.html}}} block,
-		so we have to use the :global(...) modifier to target
-		all elements inside .content
-	*/
-	.content :global(h2) {
-		font-size: 1.4em;
-		font-weight: 500;
-	}
-
-	.content :global(pre) {
-		background-color: #f9f9f9;
-		box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.05);
-		padding: 0.5em;
-		border-radius: 2px;
-		overflow-x: auto;
-	}
-
-	.content :global(pre) :global(code) {
-		background-color: transparent;
-		padding: 0;
-	}
-
-	.content :global(ul) {
-		line-height: 1.5;
-	}
-
-	.content :global(li) {
-		margin: 0 0 0.5em 0;
-	}
-</style>
-
 <svelte:head>
-	<title>{product.title}</title>
+  <title>{!product ? 'single product' : product.title}</title>
 </svelte:head>
 
-<h1>{product.title}</h1>
-
-<div class="content">
-	{product.description}
-</div>
+{#if !product}
+  <Loading />
+{:else}
+  <section class="single-product">
+    <!-- back to products -->
+    <a href="/products" class="btn btn-primary">back to products</a>
+    <!-- single product container -->
+    <div class="single-product-container">
+      <article class="single-product-image">
+        <img src={product.image.url} alt={product.title} />
+      </article>
+      <article>
+        <h1>{product.title}</h1>
+        <h2>${product.price}</h2>
+        <p>{product.description}</p>
+        <button
+          class="btn btn-primary btn-block"
+          on:click={() => {
+            addToCart(parseInt(id), product);
+            globalStore.toggleItem('cart', true);
+          }}>
+          add to cart
+        </button>
+      </article>
+    </div>
+  </section>
+{/if}

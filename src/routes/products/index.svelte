@@ -16,5 +16,5 @@
 </svelte:head>
 
 
-<Products title="our products"/>
+<Products title="our products" {products} />
 
