@@ -2,4 +2,11 @@
 	<title>Home</title>
 </svelte:head>
 
-<h1>Welcome to home page</h1>
+<Hero>
+	<a href="/products" class="btn btn-primary btn-hero">shop now</a>
+</Hero>
+
+<script>
+	import Hero from '../components/Hero.svelte';
+</script>
+
