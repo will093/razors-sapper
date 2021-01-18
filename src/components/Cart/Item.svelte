@@ -14,7 +14,7 @@
 
 <!-- cart item -->
 <div class="cart-item">
-  <img src={image} alt={title} />
+  <img src={image.url} alt={title} />
   <div>
     <h4>{title}</h4>
     <h5>${price}</h5>

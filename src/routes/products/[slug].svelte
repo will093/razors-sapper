@@ -42,7 +42,7 @@
         <button
           class="btn btn-primary btn-block"
           on:click={() => {
-            addToCart(parseInt(id), product);
+            addToCart(parseInt(product.id), product);
             globalStore.toggleItem('cart', true);
           }}>
           add to cart
