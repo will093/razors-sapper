@@ -1,9 +1,14 @@
 <script context="module">
-	export function preload() {
-		return this.fetch(`products.json`).then(r => r.json()).then(products => {
-			return { products };
-		});
+export async function preload(page, { STRAPI_URL }) {
+	const res = await this.fetch(`${STRAPI_URL}/products`);
+
+	if (res.status === 200) {
+		const data = await res.json();
+		return { products: data };
+	} else {
+		this.error(res.status, await res.text());
 	}
+}
 </script>
 
 <script>

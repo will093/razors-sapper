@@ -1,9 +1,15 @@
 
 <script context="module">
-	export function preload() {
-		return this.fetch(`index.json`).then(r => r.json()).then(products => {
-			return { featuredProducts: products };
-		});
+	export async function preload(page, { STRAPI_URL }) {
+		const res = await this.fetch(`${STRAPI_URL}/products`);
+
+		if (res.status === 200) {
+			const data = await res.json();
+			const featuredProducts = data.filter(p => p.featured)
+			return { featuredProducts };
+		} else {
+			this.error(res.status, await res.text());
+		}
 	}
 </script>
 

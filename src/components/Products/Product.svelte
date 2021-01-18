@@ -1,6 +1,7 @@
 <script>
   export let product;
   const { title, image, price, id } = product;
+  import globalStore from "../../stores/globalStore";
 </script>
 
 <article class="product">

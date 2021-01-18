@@ -1,14 +1,12 @@
 <script context="module">
-	export async function preload({ params }) {
-		// the `slug` parameter is available because
-		// this file is called [slug].svelte
-		const res = await this.fetch(`products/${params.slug}.json`);
-		const data = await res.json();
+	export async function preload({ params }, { STRAPI_URL }) {
+    const res = await this.fetch(`${STRAPI_URL}/products/${params.slug}`);
 
 		if (res.status === 200) {
+      const data = await res.json();
 			return { product: data };
 		} else {
-			this.error(res.status, data.message);
+			this.error(res.status, await res.text());
 		}
 	}
 </script>
